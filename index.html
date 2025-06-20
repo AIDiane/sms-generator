@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Compliant Real Estate SMS Generator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        .header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+        
+        .form-section {
+            padding: 40px 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1em;
+        }
+        
+        select, input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            background: white;
+        }
+        
+        select:focus, input:focus {
+            outline: none;
+            border-color: #3498db;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+            margin: 30px auto;
+            min-width: 200px;
+        }
+        
+        .generate-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(231, 76, 60, 0.3);
+        }
+        
+        .result-section {
+            margin-top: 40px;
+            padding: 30px;
+            background: #f8f9fa;
+            border-radius: 15px;
+            border: 2px solid #e9ecef;
+            display: none;
+        }
+        
+        .result-section.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .sms-output {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid #3498db;
+            margin-bottom: 20px;
+            font-size: 1.1em;
+            line-height: 1.6;
+        }
+        
+        .copy-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background: #219a52;
+        }
+        
+        .email-capture {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            margin-top: 30px;
+            border-radius: 15px;
+        }
+        
+        .email-capture h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+        
+        .email-capture p {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            opacity: 0.9;
+        }
+        
+        .email-form {
+            display: flex;
+            gap: 15px;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .email-form input {
+            flex: 1;
+            border: none;
+        }
+        
+        .email-form button {
+            background: white;
+            color: #f5576c;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .email-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header h1 { font-size: 2em; }
+            .header p { font-size: 1em; }
+            .form-section { padding: 30px 20px; }
+            .email-form { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🚀 AI SMS Generator</h1>
+            <p>Create compliant, high-converting real estate text messages in seconds</p>
+        </div>
+        
+        <div class="form-section">
+            <div class="form-group">
+                <label for="propertyType">Property Situation:</label>
+                <select id="propertyType">
+                    <option value="">Select situation...</option>
+                    <option value="taxes">Behind on taxes</option>
+                    <option value="vacant">Vacant property</option>
+                    <option value="probate">Probate/inherited</option>
+                    <option value="foreclosure">Facing foreclosure</option>
+                    <option value="absentee">Absentee landlord</option>
+                    <option value="expired">Expired listing</option>
+                    <option value="code">Code violations</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="tone">Message Tone:</label>
+                <select id="tone">
+                    <option value="">Select tone...</option>
+                    <option value="curious">Curious & Low-pressure</option>
+                    <option value="helpful">Helpful & Solution-oriented</option>
+                    <option value="direct">Direct & Professional</option>
+                    <option value="empathetic">Empathetic & Understanding</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="firstName">Your First Name:</label>
+                <input type="text" id="firstName" placeholder="Enter your first name">
+            </div>
+            
+            <div class="form-group">
+                <label for="city">City/Area:</label>
+                <input type="text" id="city" placeholder="Enter city or area">
+            </div>
+            
+            <button class="generate-btn" onclick="generateSMS()">Generate Compliant SMS</button>
+        </div>
+        
+        <div class="result-section" id="resultSection">
+            <h3 style="color: #2c3e50; margin-bottom: 20px;">Your Generated SMS:</h3>
+            <div class="sms-output" id="smsOutput"></div>
+            <button class="copy-btn" onclick="copySMS()">Copy Message</button>
+            
+            <div class="email-capture">
+                <h3>Want 77 More Prompts Like This?</h3>
+                <p>Get our complete Real Estate AI Prompts collection - normally $7.95, FREE for early users!</p>
+                <div class="email-form">
+                    <input type="email" placeholder="Enter your email" id="emailInput">
+                    <button onclick="submitEmail()">Get Free Prompts</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const smsTemplates = {
+            taxes_curious: "Hi! I noticed your property on {city}'s tax list and wanted to reach out. I work with property owners in situations like yours. Would you be open to a quick conversation about your options? - {name}",
+            taxes_helpful: "Hi {name}, I help property owners in {city} who are dealing with tax issues. I might have a solution that could help your situation. Would you be interested in learning more?",
+            taxes_direct: "Hello, I'm {name} and I work with property owners in {city} facing tax challenges. I'd like to discuss how I might be able to help. Are you available for a brief call?",
+            taxes_empathetic: "Hi, I understand dealing with property taxes can be stressful. I'm {name} and I help property owners in {city} explore their options. Would you be open to a conversation about possible solutions?",
+            
+            vacant_curious: "Hi! I noticed your property on {address} appears vacant. I work with property owners in {city} and wondered if you'd be open to discussing your plans for it? - {name}",
+            vacant_helpful: "Hello, I'm {name} and I help property owners in {city} with vacant properties. I might have some solutions that could help. Would you be interested in a quick conversation?",
+            vacant_direct: "Hi, I'm {name} and I work with vacant property owners in {city}. I'd like to discuss your property and see if I can help. Are you available for a brief call?",
+            vacant_empathetic: "Hi, I understand managing a vacant property can be challenging. I'm {name} and I help property owners in {city} find solutions. Would you be open to exploring your options?",
+            
+            probate_curious: "Hi, I work with families in {city} going through probate situations. I wondered if you might be interested in discussing your property options? - {name}",
+            probate_helpful: "Hello, I'm {name} and I help families in {city} navigate property decisions during probate. I might have solutions that could simplify things for you. Interested in learning more?",
+            probate_direct: "Hi, I'm {name} and I specialize in helping families with inherited properties in {city}. I'd like to discuss your situation and see how I can help. Available for a call?",
+            probate_empathetic: "Hi, I understand probate can be overwhelming. I'm {name} and I help families in {city} with inherited property decisions. Would you be open to a conversation about your options?",
+            
+            foreclosure_curious: "Hi, I work with homeowners in {city} facing challenging situations. I wondered if you'd be interested in discussing alternatives that might help? - {name}",
+            foreclosure_helpful: "Hello, I'm {name} and I help homeowners in {city} explore options when facing foreclosure. I might have solutions that could help your situation. Interested in learning more?",
+            foreclosure_direct: "Hi, I'm {name} and I work with homeowners in {city} facing foreclosure. I'd like to discuss alternatives that might help. Are you available for a brief conversation?",
+            foreclosure_empathetic: "Hi, I understand facing foreclosure is incredibly stressful. I'm {name} and I help homeowners in {city} explore alternatives. Would you be open to discussing your options?",
+            
+            absentee_curious: "Hi! I noticed you own property in {city} and wondered if you'd ever considered your options as an out-of-area owner? I work with property owners in similar situations. - {name}",
+            absentee_helpful: "Hello, I'm {name} and I help out-of-state property owners in {city} who want to simplify their investments. I might have solutions that could help. Interested in learning more?",
+            absentee_direct: "Hi, I'm {name} and I work with absentee property owners in {city}. I'd like to discuss your property and see if I can help simplify things. Available for a call?",
+            absentee_empathetic: "Hi, I understand managing property from a distance can be challenging. I'm {name} and I help property owners in {city} explore their options. Would you be open to a conversation?",
+            
+            expired_curious: "Hi! I noticed your property was recently on the market in {city}. I work with property owners and wondered if you'd be open to discussing alternative options? - {name}",
+            expired_helpful: "Hello, I'm {name} and I help property owners in {city} who've had their listings expire. I might have solutions that could help you achieve your goals. Interested in learning more?",
+            expired_direct: "Hi, I'm {name} and I work with property owners in {city} whose listings have expired. I'd like to discuss alternatives that might work better. Available for a conversation?",
+            expired_empathetic: "Hi, I understand having a listing expire can be frustrating. I'm {name} and I help property owners in {city} explore other options. Would you be open to discussing alternatives?",
+            
+            code_curious: "Hi! I work with property owners in {city} dealing with code issues and wondered if you'd be interested in discussing your options? - {name}",
+            code_helpful: "Hello, I'm {name} and I help property owners in {city} resolve code violations quickly. I might have solutions that could help your situation. Interested in learning more?",
+            code_direct: "Hi, I'm {name} and I work with property owners in {city} facing code violations. I'd like to discuss how I might be able to help. Are you available for a brief call?",
+            code_empathetic: "Hi, I understand dealing with code violations can be stressful. I'm {name} and I help property owners in {city} find solutions. Would you be open to exploring your options?"
+        };
+
+        function generateSMS() {
+            const propertyType = document.getElementById('propertyType').value;
+            const tone = document.getElementById('tone').value;
+            const firstName = document.getElementById('firstName').value;
+            const city = document.getElementById('city').value;
+            
+            if (!propertyType || !tone || !firstName || !city) {
+                alert('Please fill in all fields to generate your SMS');
+                return;
+            }
+            
+            const templateKey = propertyType + '_' + tone;
+            let template = smsTemplates[templateKey];
+            
+            if (!template) {
+                template = "Hi, I'm {name} and I work with property owners in {city}. I'd like to discuss your property and see if I can help. Are you available for a brief conversation?";
+            }
+            
+            const finalSMS = template
+                .replace(/{name}/g, firstName)
+                .replace(/{city}/g, city)
+                .replace(/{address}/g, '[Property Address]');
+            
+            document.getElementById('smsOutput').textContent = finalSMS;
+            document.getElementById('resultSection').classList.add('show');
+            document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function copySMS() {
+            const smsText = document.getElementById('smsOutput').textContent;
+            navigator.clipboard.writeText(smsText).then(() => {
+                const btn = document.querySelector('.copy-btn');
+                const originalText = btn.textContent;
+                btn.textContent = 'Copied!';
+                btn.style.background = '#27ae60';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.style.background = '#27ae60';
+                }, 2000);
+            });
+        }
+        
+        function submitEmail() {
+            const email = document.getElementById('emailInput').value;
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address');
+                return;
+            }
+            
+            // Here you would normally send the email to your backend
+            // For now, we'll just show a success message
+            alert('Thank you! Check your email for the 77 Real Estate AI Prompts (this is a demo - no email was actually sent)');
+            document.getElementById('emailInput').value = '';
+        }
+    </script>
+</body>
+</html>
