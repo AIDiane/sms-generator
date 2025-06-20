@@ -216,6 +216,13 @@
                     <option value="absentee">Absentee landlord</option>
                     <option value="expired">Expired listing</option>
                     <option value="code">Code violations</option>
+                    <option value="divorce">Divorce situation</option>
+                    <option value="bankruptcy">Bankruptcy</option>
+                    <option value="tired">Tired landlord</option>
+                    <option value="seniors">Senior downsizing</option>
+                    <option value="liens">Tax liens/judgments</option>
+                    <option value="equity">High equity opportunity</option>
+                    <option value="other">Other situation</option>
                 </select>
             </div>
             
@@ -250,11 +257,24 @@
             
             <div class="email-capture">
                 <h3>Want 77 More Prompts Like This?</h3>
-                <p>Get our complete Real Estate AI Prompts collection - normally $7.95, FREE for early users!</p>
+                <p>Get our complete Real Estate AI Prompts collection for just $4.95 (normally $7.95) - Limited time offer!</p>
                 <div class="email-form">
                     <input type="email" placeholder="Enter your email" id="emailInput">
-                    <button onclick="submitEmail()">Get Free Prompts</button>
+                    <button onclick="submitEmail()">Get Discounted Prompts</button>
                 </div>
+            </div>
+            
+            <div style="margin-top: 30px; padding: 20px; background: #fff3cd; border-radius: 10px; border-left: 4px solid #ffc107;">
+                <h4 style="color: #856404; margin-bottom: 10px;">⚠️ Important Compliance Notice</h4>
+                <p style="color: #856404; font-size: 0.9em; line-height: 1.5; margin-bottom: 10px;">
+                    <strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting. Check your state's TCPA requirements and consider 10DLC registration for business texting.
+                </p>
+                <p style="color: #856404; font-size: 0.9em; line-height: 1.5; margin-bottom: 10px;">
+                    <strong>Add Opt-Out:</strong> Include "Reply STOP to opt out" in your messages as required by law.
+                </p>
+                <p style="color: #856404; font-size: 0.9em; line-height: 1.5;">
+                    <strong>Disclaimer:</strong> These templates are suggestions only. Users are responsible for compliance with all applicable laws and regulations in their area.
+                </p>
             </div>
         </div>
     </div>
@@ -294,7 +314,42 @@
             code_curious: "Hi! I work with property owners in {city} dealing with code issues and wondered if you'd be interested in discussing your options? - {name}",
             code_helpful: "Hello, I'm {name} and I help property owners in {city} resolve code violations quickly. I might have solutions that could help your situation. Interested in learning more?",
             code_direct: "Hi, I'm {name} and I work with property owners in {city} facing code violations. I'd like to discuss how I might be able to help. Are you available for a brief call?",
-            code_empathetic: "Hi, I understand dealing with code violations can be stressful. I'm {name} and I help property owners in {city} find solutions. Would you be open to exploring your options?"
+            code_empathetic: "Hi, I understand dealing with code violations can be stressful. I'm {name} and I help property owners in {city} find solutions. Would you be open to exploring your options?",
+            
+            divorce_curious: "Hi, I work with property owners in {city} going through life transitions and wondered if you'd be interested in discussing your property options? - {name}",
+            divorce_helpful: "Hello, I'm {name} and I help property owners in {city} navigate real estate decisions during major life changes. I might have solutions that could help. Interested in learning more?",
+            divorce_direct: "Hi, I'm {name} and I work with property owners in {city} dealing with life transitions. I'd like to discuss your property and see how I can help. Available for a call?",
+            divorce_empathetic: "Hi, I understand major life changes can be overwhelming. I'm {name} and I help property owners in {city} during transitions. Would you be open to discussing your property options?",
+            
+            bankruptcy_curious: "Hi, I work with property owners in {city} facing financial challenges and wondered if you'd be interested in exploring your options? - {name}",
+            bankruptcy_helpful: "Hello, I'm {name} and I help property owners in {city} navigate difficult financial situations. I might have solutions that could help. Interested in learning more?",
+            bankruptcy_direct: "Hi, I'm {name} and I work with property owners in {city} dealing with financial challenges. I'd like to discuss how I might be able to help. Available for a conversation?",
+            bankruptcy_empathetic: "Hi, I understand financial difficulties can be incredibly stressful. I'm {name} and I help property owners in {city} explore their options. Would you be open to a conversation?",
+            
+            tired_curious: "Hi! I work with landlords in {city} and wondered if you'd ever considered your options for simplifying your property management? - {name}",
+            tired_helpful: "Hello, I'm {name} and I help tired landlords in {city} who want to simplify their lives. I might have solutions that could help. Interested in learning more?",
+            tired_direct: "Hi, I'm {name} and I work with landlords in {city} who are ready to step back from property management. I'd like to discuss your options. Available for a call?",
+            tired_empathetic: "Hi, I understand being a landlord can be exhausting. I'm {name} and I help property owners in {city} explore simpler options. Would you be open to a conversation?",
+            
+            seniors_curious: "Hi, I work with homeowners in {city} exploring their housing options and wondered if you'd be interested in discussing yours? - {name}",
+            seniors_helpful: "Hello, I'm {name} and I help homeowners in {city} navigate their property decisions. I might have solutions that could simplify things for you. Interested in learning more?",
+            seniors_direct: "Hi, I'm {name} and I work with homeowners in {city} exploring their housing options. I'd like to discuss your situation and see how I can help. Available for a call?",
+            seniors_empathetic: "Hi, I understand housing decisions can feel overwhelming. I'm {name} and I help homeowners in {city} explore their options. Would you be open to a conversation?",
+            
+            liens_curious: "Hi, I work with property owners in {city} dealing with lien situations and wondered if you'd be interested in discussing your options? - {name}",
+            liens_helpful: "Hello, I'm {name} and I help property owners in {city} resolve lien issues quickly. I might have solutions that could help your situation. Interested in learning more?",
+            liens_direct: "Hi, I'm {name} and I work with property owners in {city} facing lien challenges. I'd like to discuss how I might be able to help. Are you available for a brief call?",
+            liens_empathetic: "Hi, I understand dealing with liens can be stressful. I'm {name} and I help property owners in {city} find solutions. Would you be open to exploring your options?",
+            
+            equity_curious: "Hi! I noticed your property in {city} and wondered if you'd ever considered your options as a property owner in this market? - {name}",
+            equity_helpful: "Hello, I'm {name} and I help property owners in {city} explore their options in today's market. I might have insights that could help. Interested in learning more?",
+            equity_direct: "Hi, I'm {name} and I work with property owners in {city} who want to explore their options. I'd like to discuss your property and see how I can help. Available for a call?",
+            equity_empathetic: "Hi, I understand property decisions can feel overwhelming in today's market. I'm {name} and I help homeowners in {city} explore their options. Would you be open to a conversation?",
+            
+            other_curious: "Hi, I work with property owners in {city} in various situations and wondered if you'd be interested in discussing your property options? - {name}",
+            other_helpful: "Hello, I'm {name} and I help property owners in {city} with different needs and situations. I might have solutions that could help. Interested in learning more?",
+            other_direct: "Hi, I'm {name} and I work with property owners in {city}. I'd like to discuss your property and see how I can help with your situation. Available for a call?",
+            other_empathetic: "Hi, I understand every property situation is unique. I'm {name} and I help property owners in {city} explore their options. Would you be open to a conversation?"
         };
 
         function generateSMS() {
@@ -318,7 +373,7 @@
             const finalSMS = template
                 .replace(/{name}/g, firstName)
                 .replace(/{city}/g, city)
-                .replace(/{address}/g, '[Property Address]');
+                .replace(/{address}/g, '[Property Address]') + " Reply STOP to opt out.";
             
             document.getElementById('smsOutput').textContent = finalSMS;
             document.getElementById('resultSection').classList.add('show');
@@ -346,9 +401,9 @@
                 return;
             }
             
-            // Here you would normally send the email to your backend
+            // Here you would normally send the email to your backend/payment processor
             // For now, we'll just show a success message
-            alert('Thank you! Check your email for the 77 Real Estate AI Prompts (this is a demo - no email was actually sent)');
+            alert('Thank you! You\'ll be redirected to get your 77 AI Prompts for just $4.95 (this is a demo - no email was actually sent)');
             document.getElementById('emailInput').value = '';
         }
     </script>
