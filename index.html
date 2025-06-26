@@ -75,7 +75,16 @@
         <div class="book-section">
             <h3>📚 Want 77 More Prompts Like This?</h3>
             <p>Get our complete Real Estate AI Prompts collection for just $4.95 (normally $7.95) - Limited time offer!</p>
-            <button class="btn btn-secondary" onclick="subscribeForDiscount()">Subscribe & Get Discounted Prompts</button>
+            
+            <!-- Simple Mailchimp Signup Form -->
+            <form action="https://carrd.us15.list-manage.com/subscribe/post?u=82992361cfa51c639b4c1daca&amp;id=642a42b8ad&amp;f_id=000caee0f0" method="post" target="_blank" style="margin: 20px 0;">
+                <input type="email" name="EMAIL" required placeholder="Enter your email for discount code" style="width: 100%; padding: 15px; border: 2px solid #1976d2; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box;">
+                <input type="hidden" name="tags" value="2895240">
+                <div style="position: absolute; left: -5000px;" aria-hidden="true">
+                    <input type="text" name="b_82992361cfa51c639b4c1daca_642a42b8ad" tabindex="-1" value="">
+                </div>
+                <button type="submit" class="btn btn-secondary" style="width: 100%; background: #007bff; color: white; padding: 18px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">Subscribe & Get Discounted Prompts</button>
+            </form>
         </div>
         
         <div class="notice">
@@ -114,14 +123,8 @@
         }
         
         function subscribeForDiscount() {
-            var email = prompt('Enter your email to get the $4.95 discount code:');
-            if (email && email.includes('@')) {
-                // Redirect to your purchase/signup page
-                window.open('https://your-purchase-link.com?email=' + encodeURIComponent(email), '_blank');
-                alert('Thank you! Check your email for your discount code. Discount expires in 24 hours!');
-            } else if (email) {
-                alert('Please enter a valid email address.');
-            }
+            // This function is no longer needed since we're using Mailchimp form
+            // But keeping it here in case of fallback
         }
         
         function getMessagesBySituation(situation, firstName, city) {
