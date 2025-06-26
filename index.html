@@ -2,89 +2,84 @@
 <html>
 <head>
     <title>AI SMS Generator</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #475569, #1e293b); min-height: 100vh; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: bold; margin-bottom: 5px; }
+        input, select { width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
+        button { width: 100%; background: #f97316; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
+        button:hover { background: #ea580c; }
+        .result { background: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
+        .title { text-align: center; color: white; margin-bottom: 30px; }
+        #results { display: none; margin-top: 30px; }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-slate-600 to-slate-800 min-h-screen">
-    <div class="text-center py-16 px-4">
-        <h1 class="text-5xl font-bold text-white mb-4">AI SMS Generator</h1>
-        <p class="text-xl text-slate-200">Create compliant, high-converting real estate text messages in seconds</p>
+<body>
+    <div class="title">
+        <h1>AI SMS Generator</h1>
+        <p>Create compliant, high-converting real estate text messages in seconds</p>
     </div>
-
-    <div class="max-w-4xl mx-auto px-4 pb-16">
-        <div class="bg-white rounded-2xl shadow-2xl p-8">
-            <div class="space-y-6 mb-8">
-                <div>
-                    <label class="block text-lg font-semibold text-gray-700 mb-3">Property Situation:</label>
-                    <select id="situation" class="w-full p-4 border-2 border-slate-200 rounded-xl text-lg">
-                        <option value="">Choose a situation...</option>
-                        <option value="taxes">Behind on Taxes</option>
-                        <option value="vacant">Vacant Property</option>
-                        <option value="probate">Probate/Inherited</option>
-                        <option value="foreclosure">Pre-Foreclosure</option>
-                        <option value="landlord">Tired Landlord</option>
-                        <option value="other">Other situation</option>
-                    </select>
-                </div>
-
-                <div>
-                    <label class="block text-lg font-semibold text-gray-700 mb-3">Your First Name:</label>
-                    <input type="text" id="firstName" placeholder="Emily" class="w-full p-4 border-2 border-slate-200 rounded-xl text-lg">
-                </div>
-
-                <div>
-                    <label class="block text-lg font-semibold text-gray-700 mb-3">City/Area:</label>
-                    <input type="text" id="city" placeholder="Miami" class="w-full p-4 border-2 border-slate-200 rounded-xl text-lg">
-                </div>
-
-                <button onclick="generateMessages()" class="w-full bg-orange-500 text-white py-4 px-8 rounded-xl text-xl font-semibold hover:bg-orange-600">
-                    Generate Compliant SMS
-                </button>
-            </div>
-
-            <div id="results" style="display: none;">
-                <h2 class="text-2xl font-bold text-gray-800 mb-6">Your Generated SMS Variations:</h2>
-                <div id="messagesList"></div>
-            </div>
-
-            <div class="mt-8 bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
-                <h3 class="font-bold text-yellow-800 text-lg mb-3">Important Compliance Notice</h3>
-                <div class="text-yellow-700 space-y-2">
-                    <p><strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting.</p>
-                    <p><strong>Add Opt-Out:</strong> Include "Reply STOP to opt out" in your messages as required by law.</p>
-                    <p><strong>Disclaimer:</strong> These templates are suggestions only.</p>
-                </div>
-            </div>
+    
+    <div class="container">
+        <div class="form-group">
+            <label>Property Situation:</label>
+            <select id="situation">
+                <option value="">Choose a situation...</option>
+                <option value="taxes">Behind on Taxes</option>
+                <option value="vacant">Vacant Property</option>
+                <option value="probate">Probate/Inherited</option>
+                <option value="other">Other situation</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label>Your First Name:</label>
+            <input type="text" id="firstName" placeholder="Emily">
+        </div>
+        
+        <div class="form-group">
+            <label>City/Area:</label>
+            <input type="text" id="city" placeholder="Miami">
+        </div>
+        
+        <button onclick="generate()">Generate Compliant SMS</button>
+        
+        <div id="results">
+            <h2>Your Generated SMS Variations:</h2>
+            <div id="messages"></div>
+        </div>
+        
+        <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 15px; margin-top: 30px; border-radius: 8px;">
+            <h3>Important Compliance Notice</h3>
+            <p><strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting.</p>
+            <p><strong>Add Opt-Out:</strong> Include "Reply STOP to opt out" in your messages as required by law.</p>
         </div>
     </div>
 
     <script>
-        function generateMessages() {
+        function generate() {
             var situation = document.getElementById('situation').value;
             var firstName = document.getElementById('firstName').value;
             var city = document.getElementById('city').value;
-
+            
             if (!situation || !firstName || !city) {
-                alert('Please fill in all required fields.');
+                alert('Please fill in all fields');
                 return;
             }
-
+            
+            var messages = [
+                'Hi, I help homeowners in ' + city + ' with property challenges. Would you be open to a quick conversation? - ' + firstName + ' Reply STOP to opt out.',
+                'Hello, I work with property owners in ' + city + '. Would you like to discuss your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                'Hi, I assist homeowners in ' + city + ' with flexible solutions. Happy to answer questions. - ' + firstName + ' Reply STOP to opt out.'
+            ];
+            
             var html = '';
-            html += '<div class="bg-slate-50 border p-4 rounded mb-4">';
-            html += '<h4>Variation 1</h4>';
-            html += '<p>Hi, I help homeowners in ' + city + ' with property challenges. Would you be open to a quick conversation? - ' + firstName + ' Reply STOP to opt out.</p>';
-            html += '</div>';
-
-            html += '<div class="bg-slate-50 border p-4 rounded mb-4">';
-            html += '<h4>Variation 2</h4>';
-            html += '<p>Hello, I work with property owners in ' + city + '. Would you like to discuss your options? - ' + firstName + ' Text STOP to unsubscribe.</p>';
-            html += '</div>';
-
-            html += '<div class="bg-slate-50 border p-4 rounded mb-4">';
-            html += '<h4>Variation 3</h4>';
-            html += '<p>Hi, I assist property owners in ' + city + ' with flexible solutions. Happy to answer questions. - ' + firstName + ' Reply STOP to opt out.</p>';
-            html += '</div>';
-
-            document.getElementById('messagesList').innerHTML = html;
+            for (var i = 0; i < messages.length; i++) {
+                html += '<div class="result"><h4>Variation ' + (i+1) + '</h4><p>' + messages[i] + '</p></div>';
+            }
+            
+            document.getElementById('messages').innerHTML = html;
             document.getElementById('results').style.display = 'block';
         }
     </script>
