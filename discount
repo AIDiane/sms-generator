@@ -1,0 +1,282 @@
+import React, { useState } from 'react';
+import { Copy, CheckCircle, AlertTriangle } from 'lucide-react';
+
+const SMSGenerator = () => {
+  const [formData, setFormData] = useState({
+    situation: '',
+    tone: '',
+    firstName: '',
+    city: ''
+  });
+  const [generatedMessages, setGeneratedMessages] = useState([]);
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [copiedIndex, setCopiedIndex] = useState(null);
+
+  const situations = [
+    { value: 'taxes', label: 'Behind on Taxes' },
+    { value: 'vacant', label: 'Vacant Property' },
+    { value: 'probate', label: 'Probate/Inherited' },
+    { value: 'foreclosure', label: 'Pre-Foreclosure' },
+    { value: 'landlord', label: 'Tired Landlord' },
+    { value: 'divorce', label: 'Divorce Situation' },
+    { value: 'relocation', label: 'Job Relocation' },
+    { value: 'repairs', label: 'Needs Major Repairs' },
+    { value: 'downsizing', label: 'Downsizing/Elderly' },
+    { value: 'other', label: 'Other situation' }
+  ];
+
+  const tones = [
+    { value: 'curious', label: 'Curious & Low-pressure' },
+    { value: 'empathetic', label: 'Empathetic & Understanding' },
+    { value: 'professional', label: 'Professional & Direct' },
+    { value: 'helpful', label: 'Helpful & Solution-focused' }
+  ];
+
+  const generateVariations = (situation, tone, firstName, city) => {
+    const baseTemplates = {
+      taxes: [
+        `Hi, I help homeowners in ${city} who are dealing with property tax challenges. I know this can be stressful. Would you be open to a quick conversation about your options? No pressure, just want to see if I can help. - ${firstName} Reply STOP to opt out.`,
+        `Hello, I work with homeowners in ${city} facing tax situations. I understand these circumstances can be overwhelming. Would you like to explore some potential solutions? Happy to answer any questions. - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist property owners in ${city} with tax-related challenges. I know dealing with this isn't easy. Would you be interested in discussing your situation briefly? No obligations whatsoever. - ${firstName} Reply STOP to opt out.`
+      ],
+      vacant: [
+        `Hi, I work with homeowners in ${city} who need flexible solutions for empty properties. Would you be open to a brief conversation about your options? - ${firstName} Reply STOP to opt out.`,
+        `Hello, I help property owners in ${city} with vacant homes that need attention. I understand managing empty properties can be challenging. Would you like to discuss your alternatives? - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist homeowners in ${city} with vacant properties. I know maintaining empty homes can be stressful and costly. Would you be interested in exploring your options? - ${firstName} Reply STOP to opt out.`
+      ],
+      probate: [
+        `Hi, I help families in ${city} who've inherited property and need guidance. I understand this can be an emotional time with many decisions. Would you like to discuss your options with no pressure? - ${firstName} Reply STOP to opt out.`,
+        `Hello, I work with families in ${city} dealing with inherited properties. I know managing estate matters can feel overwhelming. Would you be open to a conversation about your situation? - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist families in ${city} with inherited real estate decisions. I understand this process can be complex and emotional. Would you like to explore your options together? - ${firstName} Reply STOP to opt out.`
+      ],
+      foreclosure: [
+        `Hi, I help homeowners in ${city} who are facing foreclosure challenges. I know this is an incredibly stressful situation. Would you be open to discussing potential alternatives? Time-sensitive but no pressure. - ${firstName} Reply STOP to opt out.`,
+        `Hello, I work with property owners in ${city} dealing with foreclosure proceedings. I understand how overwhelming this process can be. Would you like to explore your options? - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist homeowners in ${city} with foreclosure situations. I know this is one of the most stressful experiences possible. Would you be interested in discussing alternatives? - ${firstName} Reply STOP to opt out.`
+      ],
+      landlord: [
+        `Hi, I help landlords in ${city} who are ready to step away from property management. I understand rental properties can become more work than expected. Would you like to discuss your options? - ${firstName} Reply STOP to opt out.`,
+        `Hello, I work with property owners in ${city} who are tired of being landlords. I know dealing with tenants and maintenance can be exhausting. Would you be open to a conversation? - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist landlords in ${city} who want to simplify their lives. I understand rental management can be overwhelming and time-consuming. Would you like to explore alternatives? - ${firstName} Reply STOP to opt out.`
+      ],
+      other: [
+        `Hi, I work with property owners in ${city} in various situations and wondered if you'd be interested in discussing your property options? - ${firstName} Reply STOP to opt out.`,
+        `Hello, I help homeowners in ${city} explore their real estate alternatives. Would you be open to a brief conversation about your situation? No pressure at all. - ${firstName} Text STOP to unsubscribe.`,
+        `Hi, I assist property owners in ${city} with flexible solutions. Would you like to discuss your options? Happy to answer any questions you might have. - ${firstName} Reply STOP to opt out.`
+      ]
+    };
+
+    return baseTemplates[situation] || baseTemplates.other;
+  };
+
+  const handleInputChange = (field, value) => {
+    setFormData(prev => ({
+      ...prev,
+      [field]: value
+    }));
+  };
+
+  const generateMessages = async () => {
+    if (!formData.situation || !formData.firstName || !formData.city) return;
+    
+    setIsGenerating(true);
+    
+    // Simulate API call delay
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const messages = generateVariations(formData.situation, formData.tone, formData.firstName, formData.city);
+    setGeneratedMessages(messages);
+    setIsGenerating(false);
+    setCopiedIndex(null);
+  };
+
+  const copyToClipboard = async (text, index) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedIndex(index);
+      setTimeout(() => setCopiedIndex(null), 2000);
+    } catch (err) {
+      console.error('Failed to copy text: ', err);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-br from-slate-600 to-slate-800">
+      {/* Header */}
+      <div className="text-center py-16 px-4">
+        <h1 className="text-5xl font-bold text-white mb-4 flex items-center justify-center">
+          🚀 AI SMS Generator
+        </h1>
+        <p className="text-xl text-slate-200 max-w-3xl mx-auto">
+          Create compliant, high-converting real estate text messages in seconds
+        </p>
+      </div>
+
+      {/* Main Content */}
+      <div className="max-w-4xl mx-auto px-4 pb-16">
+        <div className="bg-white rounded-2xl shadow-2xl p-8">
+          {/* Form */}
+          <div className="space-y-6 mb-8">
+            <div>
+              <label className="block text-lg font-semibold text-gray-700 mb-3">
+                Property Situation:
+              </label>
+              <select
+                value={formData.situation}
+                onChange={(e) => handleInputChange('situation', e.target.value)}
+                className="w-full p-4 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none text-lg"
+              >
+                <option value="">Choose a situation...</option>
+                {situations.map((situation) => (
+                  <option key={situation.value} value={situation.value}>
+                    {situation.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold text-gray-700 mb-3">
+                Message Tone:
+              </label>
+              <select
+                value={formData.tone}
+                onChange={(e) => handleInputChange('tone', e.target.value)}
+                className="w-full p-4 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none text-lg"
+              >
+                <option value="">Select tone...</option>
+                {tones.map((tone) => (
+                  <option key={tone.value} value={tone.value}>
+                    {tone.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold text-gray-700 mb-3">
+                Your First Name:
+              </label>
+              <input
+                type="text"
+                value={formData.firstName}
+                onChange={(e) => handleInputChange('firstName', e.target.value)}
+                placeholder="Emily"
+                className="w-full p-4 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none text-lg"
+              />
+            </div>
+
+            <div>
+              <label className="block text-lg font-semibold text-gray-700 mb-3">
+                City/Area:
+              </label>
+              <input
+                type="text"
+                value={formData.city}
+                onChange={(e) => handleInputChange('city', e.target.value)}
+                placeholder="Miami"
+                className="w-full p-4 border-2 border-slate-200 rounded-xl focus:border-slate-500 focus:outline-none text-lg"
+              />
+            </div>
+
+            <button
+              onClick={generateMessages}
+              disabled={!formData.situation || !formData.firstName || !formData.city || isGenerating}
+              className="w-full bg-gradient-to-r from-orange-500 to-red-500 text-white py-4 px-8 rounded-xl text-xl font-semibold hover:from-orange-600 hover:to-red-600 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-[1.02]"
+            >
+              {isGenerating ? 'Generating 3 Variations...' : 'Generate Compliant SMS'}
+            </button>
+          </div>
+
+          {/* Generated Messages */}
+          {generatedMessages.length > 0 && (
+            <div className="space-y-6">
+              <h2 className="text-2xl font-bold text-gray-800 border-b-2 border-gray-200 pb-3">
+                Your Generated SMS Variations:
+              </h2>
+              
+              {generatedMessages.map((message, index) => (
+                <div key={index} className="bg-slate-50 border-2 border-slate-200 rounded-xl p-6">
+                  <div className="flex items-center justify-between mb-4">
+                    <span className="text-lg font-semibold text-slate-600">
+                      Variation {index + 1}
+                    </span>
+                    <button
+                      onClick={() => copyToClipboard(message, index)}
+                      className="flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors"
+                    >
+                      {copiedIndex === index ? (
+                        <>
+                          <CheckCircle className="w-4 h-4 mr-2" />
+                          Copied!
+                        </>
+                      ) : (
+                        <>
+                          <Copy className="w-4 h-4 mr-2" />
+                          Copy Message
+                        </>
+                      )}
+                    </button>
+                  </div>
+                  
+                  <div className="bg-white p-4 rounded-lg border-l-4 border-blue-500">
+                    <p className="text-gray-800 leading-relaxed text-lg">{message}</p>
+                  </div>
+                  
+                  <div className="mt-3 text-sm text-gray-600">
+                    Character count: {message.length}/160
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* CTA Section */}
+          {generatedMessages.length > 0 && (
+            <div className="mt-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-2xl p-8 text-center text-white">
+              <h3 className="text-3xl font-bold mb-4">
+                Want 77 More Prompts Like This?
+              </h3>
+              <p className="text-xl mb-6 opacity-90">
+                Get our complete Real Estate AI Prompts collection for just $4.95 (normally $7.95) - Limited time offer!
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 items-center justify-center max-w-lg mx-auto">
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  className="flex-1 p-3 rounded-lg text-gray-800 text-lg"
+                />
+                <a
+                  href="https://buy.stripe.com/test_6oU3cxgvN1QrewRduMf3a01"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-white text-purple-600 px-8 py-3 rounded-lg font-bold text-lg hover:bg-gray-100 transition-colors whitespace-nowrap"
+                >
+                  Get Discounted Prompts
+                </a>
+              </div>
+            </div>
+          )}
+
+          {/* Compliance Notice */}
+          <div className="mt-8 bg-yellow-50 border-2 border-yellow-200 rounded-xl p-6">
+            <div className="flex items-start">
+              <AlertTriangle className="w-6 h-6 text-yellow-600 mr-3 mt-1 flex-shrink-0" />
+              <div>
+                <h3 className="font-bold text-yellow-800 text-lg mb-3">Important Compliance Notice</h3>
+                <div className="text-yellow-700 space-y-2">
+                  <p><strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting. Check your state's TCPA requirements and consider 10DLC registration for business texting.</p>
+                  <p><strong>Add Opt-Out:</strong> Include "Reply STOP to opt out" in your messages as required by law.</p>
+                  <p><strong>Tool Limitations:</strong> This free tool provides sample SMS templates based on common seller situations. It's designed to give you a quick, compliant starting point — not a full messaging library.</p>
+                  <p><strong>Disclaimer:</strong> These templates are suggestions only. Users are responsible for compliance with all applicable laws and regulations in their area.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SMSGenerator;
