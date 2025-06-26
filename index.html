@@ -26,9 +26,6 @@
         .book-section { background: #e3f2fd; border: 2px solid #1976d2; padding: 25px; margin: 30px 0; border-radius: 12px; text-align: center; }
         .book-section h3 { color: #1976d2; margin-top: 0; font-size: 1.5em; }
         .book-section p { color: #1565c0; margin: 15px 0; line-height: 1.6; }
-        .discount-text { font-size: 1.2em; font-weight: bold; color: #d32f2f; }
-        .original-price { text-decoration: line-through; color: #666; }
-        .sale-price { color: #d32f2f; font-weight: bold; font-size: 1.3em; }
     </style>
 </head>
 <body>
@@ -117,11 +114,11 @@
         }
         
         function subscribeForDiscount() {
-            // This would typically integrate with your email service
             var email = prompt('Enter your email to get the $4.95 discount code:');
             if (email && email.includes('@')) {
-                alert('Thank you! Check your email for your discount code and purchase link. Discount expires in 24 hours!');
-                // Here you would typically send this to your email service like Mailchimp
+                // Redirect to your purchase/signup page
+                window.open('https://your-purchase-link.com?email=' + encodeURIComponent(email), '_blank');
+                alert('Thank you! Check your email for your discount code. Discount expires in 24 hours!');
             } else if (email) {
                 alert('Please enter a valid email address.');
             }
@@ -194,3 +191,10 @@
                     'Hello, I help homeowners in ' + city + ' explore their real estate alternatives. Would you be open to a brief conversation about your situation? No pressure at all. - ' + firstName + ' Text STOP to unsubscribe.',
                     'Hi, I assist property owners in ' + city + ' with flexible solutions. Would you like to discuss your options? Happy to answer any questions you might have. - ' + firstName + ' Reply STOP to opt out.'
                 ]
+            };
+            
+            return templates[situation] || templates.other;
+        }
+    </script>
+</body>
+</html>
