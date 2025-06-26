@@ -3,21 +3,29 @@
 <head>
     <title>AI SMS Generator</title>
     <style>
-        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #475569, #1e293b); min-height: 100vh; margin: 0; padding: 20px; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; }
+        body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #475569, #1e293b); min-height: 100vh; margin: 0; padding: 20px; color: #333; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+        .header { text-align: center; color: white; margin-bottom: 30px; }
+        .header h1 { font-size: 3em; margin: 0; }
+        .header p { font-size: 1.2em; margin: 10px 0; }
         .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: bold; margin-bottom: 5px; }
-        input, select { width: 100%; padding: 12px; border: 2px solid #ccc; border-radius: 8px; font-size: 16px; }
-        button { width: 100%; background: #f97316; color: white; padding: 15px; border: none; border-radius: 8px; font-size: 18px; cursor: pointer; }
-        button:hover { background: #ea580c; }
-        .result { background: #f8f9fa; border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 8px; }
-        .title { text-align: center; color: white; margin-bottom: 30px; }
+        label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.1em; }
+        input, select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
+        input:focus, select:focus { border-color: #f97316; outline: none; }
+        .btn { width: 100%; background: #f97316; color: white; padding: 18px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
+        .btn:hover { background: #ea580c; }
+        .result { background: #f8f9fa; border-left: 4px solid #007bff; padding: 20px; margin: 15px 0; border-radius: 8px; }
+        .result h4 { margin: 0 0 10px 0; color: #333; }
+        .result p { margin: 0; line-height: 1.5; }
         #results { display: none; margin-top: 30px; }
+        .notice { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; margin-top: 30px; border-radius: 8px; }
+        .notice h3 { margin-top: 0; color: #856404; }
+        .notice p { margin: 10px 0; color: #856404; }
     </style>
 </head>
 <body>
-    <div class="title">
-        <h1>AI SMS Generator</h1>
+    <div class="header">
+        <h1>🚀 AI SMS Generator</h1>
         <p>Create compliant, high-converting real estate text messages in seconds</p>
     </div>
     
@@ -29,6 +37,8 @@
                 <option value="taxes">Behind on Taxes</option>
                 <option value="vacant">Vacant Property</option>
                 <option value="probate">Probate/Inherited</option>
+                <option value="foreclosure">Pre-Foreclosure</option>
+                <option value="landlord">Tired Landlord</option>
                 <option value="other">Other situation</option>
             </select>
         </div>
@@ -43,44 +53,83 @@
             <input type="text" id="city" placeholder="Miami">
         </div>
         
-        <button onclick="generate()">Generate Compliant SMS</button>
+        <button class="btn" onclick="generateMessages()">Generate Compliant SMS</button>
         
         <div id="results">
             <h2>Your Generated SMS Variations:</h2>
-            <div id="messages"></div>
+            <div id="messagesList"></div>
         </div>
         
-        <div style="background: #fef3c7; border: 1px solid #f59e0b; padding: 15px; margin-top: 30px; border-radius: 8px;">
-            <h3>Important Compliance Notice</h3>
-            <p><strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting.</p>
+        <div class="notice">
+            <h3>⚠️ Important Compliance Notice</h3>
+            <p><strong>TCPA Compliance Required:</strong> Ensure you have proper consent before texting. Check your state's TCPA requirements and consider 10DLC registration for business texting.</p>
             <p><strong>Add Opt-Out:</strong> Include "Reply STOP to opt out" in your messages as required by law.</p>
+            <p><strong>Tool Limitations:</strong> This free tool provides sample SMS templates based on common seller situations. It's designed to give you a quick, compliant starting point — not a full messaging library.</p>
+            <p><strong>Disclaimer:</strong> These templates are suggestions only. Users are responsible for compliance with all applicable laws and regulations in their area.</p>
         </div>
     </div>
 
     <script>
-        function generate() {
+        function generateMessages() {
             var situation = document.getElementById('situation').value;
             var firstName = document.getElementById('firstName').value;
             var city = document.getElementById('city').value;
             
             if (!situation || !firstName || !city) {
-                alert('Please fill in all fields');
+                alert('Please fill in all required fields.');
                 return;
             }
             
-            var messages = [
-                'Hi, I help homeowners in ' + city + ' with property challenges. Would you be open to a quick conversation? - ' + firstName + ' Reply STOP to opt out.',
-                'Hello, I work with property owners in ' + city + '. Would you like to discuss your options? - ' + firstName + ' Text STOP to unsubscribe.',
-                'Hi, I assist homeowners in ' + city + ' with flexible solutions. Happy to answer questions. - ' + firstName + ' Reply STOP to opt out.'
-            ];
+            var messages = getMessagesBySituation(situation, firstName, city);
             
             var html = '';
             for (var i = 0; i < messages.length; i++) {
-                html += '<div class="result"><h4>Variation ' + (i+1) + '</h4><p>' + messages[i] + '</p></div>';
+                html += '<div class="result">';
+                html += '<h4>Variation ' + (i + 1) + '</h4>';
+                html += '<p>' + messages[i] + '</p>';
+                html += '<small>Character count: ' + messages[i].length + '/160</small>';
+                html += '</div>';
             }
             
-            document.getElementById('messages').innerHTML = html;
+            document.getElementById('messagesList').innerHTML = html;
             document.getElementById('results').style.display = 'block';
+        }
+        
+        function getMessagesBySituation(situation, firstName, city) {
+            var templates = {
+                taxes: [
+                    'Hi, I help homeowners in ' + city + ' who are dealing with property tax challenges. I know this can be stressful. Would you be open to a quick conversation about your options? No pressure, just want to see if I can help. - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with homeowners in ' + city + ' facing tax situations. I understand these circumstances can be overwhelming. Would you like to explore some potential solutions? Happy to answer any questions. - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist property owners in ' + city + ' with tax-related challenges. I know dealing with this is not easy. Would you be interested in discussing your situation briefly? No obligations whatsoever. - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                vacant: [
+                    'Hi, I work with homeowners in ' + city + ' who need flexible solutions for empty properties. Would you be open to a brief conversation about your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I help property owners in ' + city + ' with vacant homes that need attention. I understand managing empty properties can be challenging. Would you like to discuss your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with vacant properties. I know maintaining empty homes can be stressful and costly. Would you be interested in exploring your options? - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                probate: [
+                    'Hi, I help families in ' + city + ' who have inherited property and need guidance. I understand this can be an emotional time with many decisions. Would you like to discuss your options with no pressure? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with families in ' + city + ' dealing with inherited properties. I know managing estate matters can feel overwhelming. Would you be open to a conversation about your situation? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist families in ' + city + ' with inherited real estate decisions. I understand this process can be complex and emotional. Would you like to explore your options together? - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                foreclosure: [
+                    'Hi, I help homeowners in ' + city + ' who are facing foreclosure challenges. I know this is an incredibly stressful situation. Would you be open to discussing potential alternatives? Time-sensitive but no pressure. - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' dealing with foreclosure proceedings. I understand how overwhelming this process can be. Would you like to explore your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with foreclosure situations. I know this is one of the most stressful experiences possible. Would you be interested in discussing alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                landlord: [
+                    'Hi, I help landlords in ' + city + ' who are ready to step away from property management. I understand rental properties can become more work than expected. Would you like to discuss your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' who are tired of being landlords. I know dealing with tenants and maintenance can be exhausting. Would you be open to a conversation? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist landlords in ' + city + ' who want to simplify their lives. I understand rental management can be overwhelming and time-consuming. Would you like to explore alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                other: [
+                    'Hi, I work with property owners in ' + city + ' in various situations and wondered if you would be interested in discussing your property options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I help homeowners in ' + city + ' explore their real estate alternatives. Would you be open to a brief conversation about your situation? No pressure at all. - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist property owners in ' + city + ' with flexible solutions. Would you like to discuss your options? Happy to answer any questions you might have. - ' + firstName + ' Reply STOP to opt out.'
+                ]
+            };
+            
+            return templates[situation] || templates.other;
         }
     </script>
 </body>
