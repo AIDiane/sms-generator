@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>AI SMS Generator</title>
+    <title>AI Real Estate Messaging Tool</title>
     <style>
         body { font-family: Arial, sans-serif; background: linear-gradient(135deg, #475569, #1e293b); min-height: 100vh; margin: 0; padding: 20px; color: #333; }
         .container { max-width: 800px; margin: 0 auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
@@ -12,10 +12,10 @@
         label { display: block; font-weight: bold; margin-bottom: 8px; font-size: 1.1em; }
         input, select { width: 100%; padding: 15px; border: 2px solid #ddd; border-radius: 10px; font-size: 16px; box-sizing: border-box; }
         input:focus, select:focus { border-color: #f97316; outline: none; }
-        .btn { width: 100%; background: #f97316; color: white; padding: 18px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer; transition: background 0.3s; margin-bottom: 10px; }
+        .btn { width: 100%; background: #f97316; color: white; padding: 18px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer; transition: background 0.3s; }
         .btn:hover { background: #ea580c; }
-        .btn-secondary { background: #007bff; }
-        .btn-secondary:hover { background: #0056b3; }
+        .btn-secondary { background: #4f46e5; margin-top: 15px; }
+        .btn-secondary:hover { background: #4338ca; }
         .result { background: #f8f9fa; border-left: 4px solid #007bff; padding: 20px; margin: 15px 0; border-radius: 8px; }
         .result h4 { margin: 0 0 10px 0; color: #333; }
         .result p { margin: 0; line-height: 1.5; }
@@ -23,15 +23,23 @@
         .notice { background: #fff3cd; border: 1px solid #ffeaa7; padding: 20px; margin-top: 30px; border-radius: 8px; }
         .notice h3 { margin-top: 0; color: #856404; }
         .notice p { margin: 10px 0; color: #856404; }
-        .book-section { background: #e3f2fd; border: 2px solid #1976d2; padding: 25px; margin: 30px 0; border-radius: 12px; text-align: center; }
-        .book-section h3 { color: #1976d2; margin-top: 0; font-size: 1.5em; }
-        .book-section p { color: #1565c0; margin: 15px 0; line-height: 1.6; }
+        .cta-section { background: #f8fafc; border: 2px solid #e2e8f0; padding: 25px; margin-top: 30px; border-radius: 12px; text-align: center; }
+        .cta-section h3 { color: #1e293b; margin-bottom: 15px; font-size: 1.4em; }
+        .cta-section p { color: #475569; margin-bottom: 20px; line-height: 1.6; }
+        .cta-section ul { text-align: left; max-width: 400px; margin: 20px auto; }
+        .cta-section li { margin-bottom: 8px; color: #059669; font-weight: 500; }
+        #mc_embed_signup { background: transparent !important; width: 100% !important; }
+        #mc_embed_signup form { text-align: center; }
+        #mce-EMAIL { margin-bottom: 15px; }
+        #mc-embedded-subscribe { background: #4f46e5 !important; color: white !important; border: none !important; padding: 15px 30px !important; border-radius: 8px !important; font-size: 16px !important; font-weight: bold !important; cursor: pointer; }
+        #mc-embedded-subscribe:hover { background: #4338ca !important; }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="header">
-        <h1>🚀 AI SMS Generator</h1>
-        <p>Create compliant, high-converting real estate text messages in seconds</p>
+        <h1>🚀 AI Real Estate Messaging Tool</h1>
+        <p>Create compliant, high-converting seller outreach messages in seconds</p>
     </div>
     
     <div class="container">
@@ -41,16 +49,17 @@
                 <option value="">Choose a situation...</option>
                 <option value="divorce">Divorce</option>
                 <option value="eviction">Eviction</option>
-                <option value="preprobate">Pre-Probate</option>
-                <option value="landlord">Tired Landlords</option>
+                <option value="pre-probate">Pre-Probate</option>
+                <option value="tired-landlords">Tired Landlords</option>
                 <option value="seniors">Seniors</option>
                 <option value="liens">Liens</option>
-                <option value="foreclosure">Pre-Foreclosure</option>
+                <option value="pre-foreclosure">Pre-Foreclosure</option>
                 <option value="bankruptcy">Bankruptcy</option>
-                <option value="highequity">High Equity</option>
+                <option value="high-equity">High Equity</option>
                 <option value="vacant">Vacant</option>
-                <option value="taxes">Tax Delinquency</option>
-                <option value="failedlistings">Failed Listings</option>
+                <option value="tax-delinquency">Tax Delinquency</option>
+                <option value="failed-listings">Failed Listings</option>
+                <option value="absentee-owner">Absentee Owner</option>
                 <option value="other">Other</option>
             </select>
         </div>
@@ -72,19 +81,31 @@
             <div id="messagesList"></div>
         </div>
         
-        <div class="book-section">
-            <h3>📚 Want 77 More Prompts Like This?</h3>
-            <p>Get our complete Real Estate AI Prompts collection for just $4.95 (normally $7.95) - Limited time offer!</p>
+        <div class="cta-section">
+            <h3>🚀 Ready to Master AI for Real Estate?</h3>
+            <p><strong>Get 77 Proven AI Prompts That Generate Leads, Analyze Deals & Close More Sales</strong></p>
+            <p>Transform how you communicate with motivated sellers using our complete AI toolkit - designed for investors who want professional results without the guesswork.</p>
             
-            <!-- Simple Mailchimp Signup Form -->
-            <form action="https://carrd.us15.list-manage.com/subscribe/post?u=82992361cfa51c639b4c1daca&amp;id=642a42b8ad&amp;f_id=000caee0f0" method="post" target="_blank" style="margin: 20px 0;">
-                <input type="email" name="EMAIL" required placeholder="Enter your email for discount code" style="width: 100%; padding: 15px; border: 2px solid #1976d2; border-radius: 10px; font-size: 16px; margin-bottom: 15px; box-sizing: border-box;">
-                <input type="hidden" name="tags" value="2895240">
-                <div style="position: absolute; left: -5000px;" aria-hidden="true">
-                    <input type="text" name="b_82992361cfa51c639b4c1daca_642a42b8ad" tabindex="-1" value="">
-                </div>
-                <button type="submit" class="btn btn-secondary" style="width: 100%; background: #007bff; color: white; padding: 18px; border: none; border-radius: 10px; font-size: 20px; font-weight: bold; cursor: pointer;">Subscribe & Get Discounted Prompts</button>
-            </form>
+            <ul>
+                <li>✅ Lead Generation Scripts</li>
+                <li>✅ Deal Analysis Frameworks</li>
+                <li>✅ Objection Handling Responses</li>
+                <li>✅ Follow-up Sequences</li>
+                <li>✅ Negotiation Templates</li>
+            </ul>
+            
+            <p><strong>Special Price: Just $4.95 (normally $7.95) - Limited Time!</strong></p>
+            
+            <div id="mc_embed_signup">
+                <form action="https://carrd.us15.list-manage.com/subscribe/post?u=82992361cfa51c639b4c1daca&id=642a42b8ad&f_id=000caee0f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+                    <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="" placeholder="Enter your email address">
+                    <input type="hidden" name="tags" value="2895240">
+                    <div aria-hidden="true" style="position: absolute; left: -5000px;">
+                        <input type="text" name="b_82992361cfa51c639b4c1daca_642a42b8ad" tabindex="-1" value="">
+                    </div>
+                    <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Subscribe & Get Discounted Prompts">
+                </form>
+            </div>
         </div>
         
         <div class="notice">
@@ -122,74 +143,74 @@
             document.getElementById('results').style.display = 'block';
         }
         
-        function subscribeForDiscount() {
-            // This function is no longer needed since we're using Mailchimp form
-            // But keeping it here in case of fallback
-        }
-        
         function getMessagesBySituation(situation, firstName, city) {
             var templates = {
-                divorce: [
-                    'Hi, I help homeowners in ' + city + ' who are going through divorce and need to make decisions about their property. I understand this can be a challenging time. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' during divorce proceedings. I know managing real estate during this transition can feel overwhelming. Would you like to explore your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with property decisions during divorce. I understand this is a sensitive time with many considerations. Would you be interested in a brief conversation? - ' + firstName + ' Reply STOP to opt out.'
+                'divorce': [
+                    'Hi, I help homeowners in ' + city + ' during life transitions like divorce. I know this can be an overwhelming time with many decisions to make. Would you be open to a brief conversation about your property options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' who are going through divorce and need flexible solutions. I understand this is a challenging time. Would you like to discuss your alternatives with no pressure? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with property matters during divorce proceedings. I know this situation brings many complexities. Would you be interested in exploring your options? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                eviction: [
-                    'Hi, I help property owners in ' + city + ' who are dealing with difficult tenant situations. I know eviction proceedings can be stressful and costly. Would you like to discuss your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with landlords in ' + city + ' facing eviction challenges. I understand how draining these situations can be. Would you be open to exploring alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist property owners in ' + city + ' with tenant-related challenges. I know eviction processes can be lengthy and expensive. Would you be interested in discussing solutions? - ' + firstName + ' Reply STOP to opt out.'
+                'eviction': [
+                    'Hi, I help property owners in ' + city + ' dealing with challenging tenant situations. I understand evictions can be stressful and costly. Would you be open to discussing alternative solutions? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with landlords in ' + city + ' facing eviction proceedings. I know this process can be both emotionally and financially draining. Would you like to explore your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist property owners in ' + city + ' with tenant-related challenges including evictions. I understand how difficult these situations can be. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                preprobate: [
-                    'Hi, I help families in ' + city + ' who may need to make decisions about inherited property in the future. I understand planning ahead can provide peace of mind. Would you be open to a conversation? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with families in ' + city + ' regarding potential estate planning for real estate. I know these conversations can be sensitive but important. Would you like to discuss your options? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist families in ' + city + ' with pre-probate property planning. I understand this requires careful consideration and family discussions. Would you be interested in exploring your alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                'pre-probate': [
+                    'Hi, I help families in ' + city + ' who may be facing future estate planning decisions. I understand these conversations can be difficult but important. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with families in ' + city + ' on estate planning matters involving real estate. I know planning ahead can provide peace of mind. Would you like to explore your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist families in ' + city + ' with property planning before estate issues arise. I understand the importance of being prepared. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                landlord: [
-                    'Hi, I help tired landlords in ' + city + ' who are ready to step away from property management. I understand rental properties can become more work than expected. Would you like to discuss your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' who are exhausted from being landlords. I know dealing with tenants and maintenance can be draining. Would you be open to a conversation? - ' + firstName + ' Text STOP to unsubscribe.',
+                'tired-landlords': [
+                    'Hi, I help landlords in ' + city + ' who are ready to step away from property management. I understand rental properties can become more work than expected. Would you like to discuss your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' who are tired of being landlords. I know dealing with tenants and maintenance can be exhausting. Would you be open to a conversation? - ' + firstName + ' Text STOP to unsubscribe.',
                     'Hi, I assist landlords in ' + city + ' who want to simplify their lives. I understand rental management can be overwhelming and time-consuming. Would you like to explore alternatives? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                seniors: [
-                    'Hi, I help senior homeowners in ' + city + ' who may be considering their housing options. I understand this stage of life comes with important decisions. Would you be open to a respectful conversation? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with seniors in ' + city + ' regarding their property needs and options. I know these decisions require careful consideration. Would you like to discuss your situation? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist senior property owners in ' + city + ' with housing transitions and options. I understand the importance of making informed decisions at this stage. Would you be interested in exploring alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                'seniors': [
+                    'Hi, I help seniors in ' + city + ' who are considering their housing options. I understand this decision involves many important factors. Would you be open to a respectful conversation about your property? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with senior homeowners in ' + city + ' exploring their real estate alternatives. I know these decisions require careful consideration. Would you like to discuss your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist seniors in ' + city + ' with property-related decisions. I understand the importance of making choices that support your lifestyle and goals. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                liens: [
-                    'Hi, I help homeowners in ' + city + ' who are dealing with liens on their property. I understand this can create complications and stress. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' facing lien issues. I know these situations can be complex and overwhelming. Would you like to explore potential solutions? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with lien-related property challenges. I understand these issues require careful handling and expertise. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
+                'liens': [
+                    'Hi, I help homeowners in ' + city + ' dealing with property lien situations. I know these issues can be complex and stressful. Would you be open to discussing potential solutions? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' facing lien challenges. I understand how overwhelming these legal matters can be. Would you like to explore your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with lien-related property issues. I know dealing with these matters requires careful attention. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                foreclosure: [
-                    'Hi, I help homeowners in ' + city + ' who are facing pre-foreclosure challenges. I know this is an incredibly stressful situation. Would you be open to discussing potential alternatives? Time-sensitive but no pressure. - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' dealing with pre-foreclosure proceedings. I understand how overwhelming this process can be. Would you like to explore your options? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with pre-foreclosure situations. I know this is one of the most stressful experiences possible. Would you be interested in discussing alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                'pre-foreclosure': [
+                    'Hi, I help homeowners in ' + city + ' who are facing foreclosure challenges. I know this is an incredibly stressful situation. Would you be open to discussing potential alternatives? Time-sensitive but no pressure. - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' dealing with foreclosure proceedings. I understand how overwhelming this process can be. Would you like to explore your options? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with foreclosure situations. I know this is one of the most stressful experiences possible. Would you be interested in discussing alternatives? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                bankruptcy: [
-                    'Hi, I help homeowners in ' + city + ' who are considering bankruptcy and need to make property decisions. I understand this is a difficult financial situation. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' facing bankruptcy proceedings. I know managing assets during this time can be overwhelming. Would you like to explore alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with property decisions during bankruptcy. I understand this requires careful consideration of your financial situation. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
+                'bankruptcy': [
+                    'Hi, I help homeowners in ' + city + ' going through bankruptcy proceedings. I understand this is an extremely difficult time with many decisions to make. Would you be open to discussing your property options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with property owners in ' + city + ' dealing with bankruptcy situations. I know this process involves complex financial and emotional challenges. Would you like to explore alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with property matters during bankruptcy. I understand the importance of making informed decisions during this time. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                highequity: [
-                    'Hi, I help homeowners in ' + city + ' who have significant equity in their property and want to explore their options. Would you be interested in discussing ways to maximize your position? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' who have built substantial equity. I understand you may want to explore different strategies. Would you like to discuss your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with high-equity properties who want to consider their options. Would you be open to a conversation about maximizing your investment? - ' + firstName + ' Reply STOP to opt out.'
+                'high-equity': [
+                    'Hi, I work with homeowners in ' + city + ' who have built significant equity in their properties. I help people explore options to access that equity. Would you be open to a brief conversation? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I assist property owners in ' + city + ' with high-equity properties explore their alternatives. I understand you have valuable options available. Would you like to discuss them? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I help homeowners in ' + city + ' who have substantial equity make informed decisions about their property. Would you be interested in exploring your opportunities? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                vacant: [
-                    'Hi, I work with homeowners in ' + city + ' who have vacant properties. I understand managing empty homes can be challenging and costly. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I help property owners in ' + city + ' with vacant homes that need attention. I know maintaining empty properties can be stressful. Would you like to explore alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with vacant properties. I understand these situations can be both costly and concerning. Would you be interested in discussing solutions? - ' + firstName + ' Reply STOP to opt out.'
+                'vacant': [
+                    'Hi, I work with homeowners in ' + city + ' who need flexible solutions for empty properties. Would you be open to a brief conversation about your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I help property owners in ' + city + ' with vacant homes that need attention. I understand managing empty properties can be challenging. Would you like to discuss your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with vacant properties. I know maintaining empty homes can be stressful and costly. Would you be interested in exploring your options? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                taxes: [
-                    'Hi, I help homeowners in ' + city + ' who are dealing with property tax delinquency. I understand this can be stressful and time-sensitive. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' facing tax delinquency issues. I know these situations can create significant pressure. Would you like to explore potential solutions? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with tax delinquency challenges. I understand the urgency and stress these situations create. Would you be interested in a conversation about alternatives? - ' + firstName + ' Reply STOP to opt out.'
+                'tax-delinquency': [
+                    'Hi, I help homeowners in ' + city + ' who are dealing with property tax challenges. I know this can be stressful. Would you be open to a quick conversation about your options? No pressure, just want to see if I can help. - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I work with homeowners in ' + city + ' facing tax situations. I understand these circumstances can be overwhelming. Would you like to explore some potential solutions? Happy to answer any questions. - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist property owners in ' + city + ' with tax-related challenges. I know dealing with this is not easy. Would you be interested in discussing your situation briefly? No obligations whatsoever. - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                failedlistings: [
-                    'Hi, I help homeowners in ' + city + ' whose properties didn\'t sell as expected. I understand this can be disappointing and frustrating. Would you be open to discussing alternative options? - ' + firstName + ' Reply STOP to opt out.',
-                    'Hello, I work with property owners in ' + city + ' who have had unsuccessful listing experiences. I know this can be discouraging. Would you like to explore different approaches? - ' + firstName + ' Text STOP to unsubscribe.',
-                    'Hi, I assist homeowners in ' + city + ' with properties that didn\'t sell through traditional listing. I understand you may be looking for alternatives. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
+                'failed-listings': [
+                    'Hi, I work with homeowners in ' + city + ' whose properties did not sell through traditional listing. I understand how frustrating this can be. Would you be open to discussing alternative options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I help property owners in ' + city + ' who have had challenges selling their homes through the MLS. I know this experience can be disappointing. Would you like to explore other alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist homeowners in ' + city + ' with properties that have been on the market without success. I understand the stress this situation creates. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
                 ],
-                other: [
+                'absentee-owner': [
+                    'Hi, I work with out-of-area property owners in ' + city + '. I understand managing properties from a distance can be challenging. Would you be open to discussing your options? - ' + firstName + ' Reply STOP to opt out.',
+                    'Hello, I help absentee property owners with assets in ' + city + '. I know long-distance property management has unique challenges. Would you like to explore your alternatives? - ' + firstName + ' Text STOP to unsubscribe.',
+                    'Hi, I assist out-of-state property owners with ' + city + ' real estate. I understand the complexities of managing properties remotely. Would you be interested in a conversation? - ' + firstName + ' Reply STOP to opt out.'
+                ],
+                'other': [
                     'Hi, I work with property owners in ' + city + ' in various situations and wondered if you would be interested in discussing your property options? - ' + firstName + ' Reply STOP to opt out.',
                     'Hello, I help homeowners in ' + city + ' explore their real estate alternatives. Would you be open to a brief conversation about your situation? No pressure at all. - ' + firstName + ' Text STOP to unsubscribe.',
                     'Hi, I assist property owners in ' + city + ' with flexible solutions. Would you like to discuss your options? Happy to answer any questions you might have. - ' + firstName + ' Reply STOP to opt out.'
